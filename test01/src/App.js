@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
+import './App.css'
+// import Bpp,{Cpp,Dpp} from './Bpp';
 
-class Bpp extends Component {
+class App extends Component {
+  // 멤버 변수 . 
+  // 멤버 함수 .
+  // render <<< 멤버 함수.
   render() {
+    console.log(1000);
+
     return (
       <div>
-        <h1>독수리</h1>
+        <h1>App</h1>
+        <Bpp/>
+      
+      
       </div>
     );
   }
 }
-
-class App extends Component {
+class Bpp extends Component {
   render() {
+    console.log(2000);
     return (
       <div>
-        <Bpp/>
-        <Bpp></Bpp>
-        <h1>호랑이</h1>
+        <h1>Bpp</h1>
       </div>
     );
   }
