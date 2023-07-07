@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
-import './App.css'
-// import Bpp,{Cpp,Dpp} from './Bpp';
+import { useState } from 'react';
+function App() {
+   const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
-class App extends Component {
-  // 멤버 변수 . 
-  // 멤버 함수 .
-  // render <<< 멤버 함수.
-  render() {
-    console.log(1000);
-
-    return (
-      <div>
+  function f1(e){
+    console.log(e);
+    setX(e.clientX);
+    setY(e.clientY);
+  }
+  return (
+    <div>
+        <div
+            style={ {background: 'red'}}
+            onMouseMove={f1}> 호랑이
+        </div>
         <h1>App</h1>
-        <Bpp/>
-      
-      
-      </div>
-    );
-  }
-}
-class Bpp extends Component {
-  render() {
-    console.log(2000);
-    return (
-      <div>
-        <h1>Bpp</h1>
-      </div>
-    );
-  }
+        <h1>{x} {y}</h1>
+    </div>
+  )
 }
 
-export default App;
+export default App;  
