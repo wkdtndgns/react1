@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
-class App extends Component {
-  increase = () => {
-    console.log(this);
-    console.log(this.props);
-  }
+import { useState } from 'react';
+function App() {
+   const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
-  render() {
-    return (
-      <div>
+  function f1(e){
+    console.log(e);
+    setX(e.clientX);
+    setY(e.clientY);
+  }
+  return (
+    <div>
+        <div
+            style={ {background: 'red'}}
+            onMouseMove={f1}> 호랑이
+        </div>
         <h1>App</h1>
-        <button onClick={this.increase}>버튼</button>
-      </div>
-    );
-  }
+        <h1>{x} {y}</h1>
+    </div>
+  )
 }
 
-const initState = {num : 100};
-export const reducers = (state=initState, action) => {
-  switch(action.type){
-    case 'add': 
-      return {num: state.num + 1}; 
-    default: 
-      return state;
-  }
-  
-  // state.num++;
-  // state.num--;
-}
-
-export default App;
+export default App;  
