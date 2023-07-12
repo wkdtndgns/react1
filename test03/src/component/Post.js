@@ -8,8 +8,8 @@ const Post = observer(() => {
     const postStore = totalStore.postStore;
     return (
         <div>
-          <input type="number" value={id} onChange={e => setId(e.target.value)} />
-            <button onClick={fetchPost}>Fetch Post</button>
+          <input data-state='good' type="number" minLength={1} value={id} onChange={e => setId(e.target.value)} />
+          <button onClick={fetchPost}>요청</button>
         </div>
     );
 });

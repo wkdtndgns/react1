@@ -18,7 +18,11 @@ function MyGrid({ data, columns }) {
             tui = new Grid({
                 el: gridEl.current,
                 data,
-                columns
+                columns,
+                pageOptions: {
+                    useClient: true,
+                    perPage: 5
+                  }
             });
         } else { 
             tui.resetData(data);
