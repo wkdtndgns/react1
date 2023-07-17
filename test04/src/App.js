@@ -1,66 +1,148 @@
+import React, { Component , useState } from 'react';
 import axios from 'axios';
-import React, { Component } from 'react';
+import { useForm } from "react-hook-form";
+import './form.css';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      name: ''
-    };
-  }
-
   f1 = () => {
-    axios.get('/users/2', {tiger: '호랑이'})
+    axios.post('/', {})
     .then( res => {
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.msg);
+      console.log(res,res.data);
     });
   }
-
   f2 = () => {
-    axios.post('/users/2', {tiger: '호랑이'})
+    axios.get('/tiger', {})
     .then( res => {
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.tiger);
+      console.log(res,res.data);
     });
   }
-
-  f3 = (e) => {
-    e.preventDefault();
-    axios.post('/users/2', {tiger: '호랑이2'})
+  f3 = () => {
+    axios.post('/tiger', {})
     .then( res => {
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.tiger);
+      console.log(res,res.data);
     });
   }
-
-  onClickServerRequest4 = (e) => {
-    e.preventDefault();
-
-    console.log(e.target);
-    axios.post('/users/2', e.target)
-    .then((res) => console.log(res));
+  f5 = () =>{
+    axios.post('/user/?value=1',{})
+    .then( (res)=>{
+      console.log('f5',res.data);
+    });
   }
-
-  onHandleChangeName = (e) => {
-    this.setState({ name: e.target.value });
+  f6 = () =>{
+    axios.post('/user/?value=2',{})
+    .then( (res)=>{
+      console.log('f5',res.data);
+    });
   }
-  
+  f7 = () =>{
+    axios.get('/tiger',{})
+    .then( (res)=>{
+      console.log('f7',res.data);
+    });
+  }  
+  f8 = () =>{
+    axios.get('/tiger/lion',{})
+    .then( (res)=>{
+      console.log('f8',res.data);
+    });
+  }  
+  f9 = () =>{
+    axios.get('/cat?value=2',{})
+    .then( (res)=>{
+      console.log('f9',res.data);
+    });
+  }  
+  f10 = () =>{
+    axios.get('/cat/cat',{})
+    .then( (res)=>{
+      console.log('f10',res.data);
+    });
+  }  
+  f11 = () =>{
+    axios.get('/tiger?monkey=99',{})
+    .then( (res)=>{
+      console.log('f11',res.data);
+    });
+  }  
+  f12 = () =>{
+    axios.get('/tiger/99',{})
+    .then( (res)=>{
+      console.log('f12',res.data);
+    });
+  }  
+  select = () =>{
+    axios.get('/cat/users',{})
+    .then( (res)=>{
+      console.log('select',res.data);
+    });
+  }
+  insert = () =>{
+
+  }
+  update = () => {
+
+  }
   render() {
     return (
-      <div>
-        <button onClick={() => {this.f1()}}>클릭</button><br/>
-        <button onClick={() => {this.f2()}}>클릭</button><br/>
-        <form onSubmit={(e) => this.onClickServerRequest4(e)}>
-          <input type="text" name='name'  />
-          <button type='submit'>로그인</button>
-        </form>
+      <div> 
+       <div style={ {margin: '5% 0 5% 0'}}>
+          <button onClick={() => {this.select()}}>검색</button><br/>
+        </div>
+        <Bpp/>
+        <Cpp/>
       </div>
     );
   }
 }
 
 export default App;
+
+function Bpp(props) {
+  const { register, handleSubmit } = useForm();
+  // const [data, setData] = useState("");
+
+
+  function onSubmit(param){
+    axios.post('/cat/user', param)
+    .then((res) => console.log(res));
+  }
+  return (
+    <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+      <input {...register("name")} placeholder="name" />
+      <input {...register("email")} placeholder="email" />
+      <input type="submit" />
+    </form>
+  );
+}
+
+function Cpp(props) {
+  const [num, setNum] = useState("");
+  function delUser(params) {
+    axios.delete('/cat/user/'+num)
+    .then((res) => console.log(res));
+  }
+  return (
+    <div>
+      <input type='number' style={ {width: '100px'}}onChange={(e)=> setNum(e.target.value)} /> 
+      <button onClick={() => delUser()}>삭제</button><br/>
+    </div>
+  );
+}
+
+function Dpp(props) {
+  const { register, handleSubmit } = useForm();
+  // const [data, setData] = useState("");
+
+
+  function onSubmit(param){
+    axios.put('/cat/user', param)
+    .then((res) => console.log(res));
+  }
+  return (
+    <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+      <input {...register("name")} placeholder="name" />
+      <input {...register("email")} placeholder="email" />
+      <input type="submit" />
+    </form>
+  );
+}
