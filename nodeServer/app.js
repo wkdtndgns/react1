@@ -18,6 +18,54 @@ app.use(express.urlencoded({extended: false}))
 // });
 
 let router = express.Router();
+
+const mysql = require('mysql2');
+const connection = mysql.createConnection({
+    host: "localhost",
+    port: "3306",
+    database: 'db01',
+    user: "root",
+    password: "1234",
+});
+
+
+app.use('/api/Swtool',
+    router.post('/',(req,res,next)=>{
+        console.log(1);        
+        req.body.mapper = 'SwToolsMapper';
+        req.body.crud = 'select';
+        req.body.mapper_id = 'selectSwToolList';
+
+        router.use('/', (req,res,next) =>{
+            console.log(2,req.body);
+            let param = req.body;
+            let mybatisMapper = require('mybatis-mapper');
+            mybatisMapper.createMapper(['SwToolsMapper.xml']);
+
+            console.log(typeof mybatisMapper);
+            
+          let query =  mybatisMapper.getStatement(
+                'SwToolsMapper',
+                'selectSwToolsList',
+                {},
+                { language: 'sql', indent: '      '} 
+            )
+            console.log(query);
+            try {
+                connection.query(query,
+                (error, rows, field) => {
+                    console.log('rows ', rows);
+                    res.send(rows);
+                })
+            } catch (error) {
+                
+            }
+        });
+        next('route');
+    })
+);
+
+
 app.use('/tiger/:monkey',(req,res,next)=>{
     console.log(req.params.monkey);
     res.send('ex12');
